@@ -12,7 +12,7 @@ def main():
     seed = random.seed()
 
     here = os.path.dirname(os.path.abspath(__file__))
-    path = os.path.join(here, "compatibilityInput.xlsx")
+    path = os.path.join(here, "compatibility_input.xlsx")
 
     # get compatibility matrix and student ID's
     C, ids = input_compatibility(path)
