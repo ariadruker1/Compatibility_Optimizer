@@ -5,8 +5,8 @@ Fall 2025
 
 # Multi-start random hill-climb approach
 import os, random
-from cleaningInputCompatibility import input_compatibility
-from randomMatching import random_matching
+from cleaning_input_compatibility import input_compatibility
+from random_matching import random_matching
 
 def main():
     seed = random.seed()

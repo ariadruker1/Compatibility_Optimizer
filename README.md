@@ -1,12 +1,14 @@
 # Compatibility Optimizer
 
-This repository implements an AI-based optimization algorithm for solving a group compatibility problem. The program reads a matrix of pairwise compatibility scores from an Excel sheet and applies a **random hill climbing** approach to find the combination of pairings that maximizes the overall compatibility score.
+This repository implements an AI-based optimization algorithm for solving a group compatibility problem.  
+The program reads a matrix of pairwise compatibility scores from an Excel sheet and applies a **random hill climbing** approach to find the combination of pairings that maximizes the overall compatibility score.
 
 ---
 
 ## Overview
 
-The goal of the project is to generate an optimal set of pairings from a set of individuals, each with compatibility scores toward every other participant. This problem is equivalent to a **combinatorial optimization** task, where the objective is to maximize the sum of selected compatibility values under pairing constraints.
+The goal of the project is to generate an optimal set of pairings from a set of individuals, each with compatibility scores toward every other participant.  
+This problem is equivalent to a **combinatorial optimization** task, where the objective is to maximize the sum of selected compatibility values under pairing constraints.
 
 The implemented solution leverages **randomized search** and **hill climbing heuristics** to iteratively improve candidate solutions based on local fitness evaluations.
 
@@ -17,11 +19,11 @@ The implemented solution leverages **randomized search** and **hill climbing heu
 The optimizer begins with a random pairing configuration and repeatedly performs local swaps or adjustments to improve the total compatibility score.  
 The process continues until either a maximum iteration threshold or a stagnation limit is reached.
 
-### Key features:
-- **Stochastic initialization**: starts from a random feasible solution  
-- **Random hill climbing**: explores neighboring solutions by pair swapping and retains only improvements to a depth  
-- **Fitness evaluation**: total compatibility score is recalculated at each step to avoid local maxima's  
-- **Convergence criteria**: stops after a defined number of iterations without improvement  
+### Key features
+- **Stochastic initialization** – starts from a random feasible solution  
+- **Random hill climbing** – explores neighboring solutions by pair swapping and retains only improvements to a depth  
+- **Fitness evaluation** – total compatibility score is recalculated at each step to avoid local maxima's  
+- **Convergence criteria** – stops after a defined number of iterations without improvement  
 
 The algorithm’s accuracy relative to the theoretical optimal score (4949) is reported as:
 
@@ -37,25 +39,33 @@ This produces a percentage accuracy rounded to one decimal place.
 
 The project uses the following Python modules:
 
-- `os` – for file path handling and system integration  
 - `random` – for generating random initial configurations and probabilistic moves  
-- `pandas` – for reading and processing the input Excel sheet (`compatibilityInput.xlsx`)
+- `pandas` – for reading and processing the input Excel sheet (`compatibility_input.xlsx`)  
+- `openpyxl` – used by pandas as the engine to read `.xlsx` files  
+
+Standard libraries like `os` are not required in the current implementation and may be removed if unused.
 
 To install dependencies:
 ```bash
-pip install pandas
+pip install -r requirements.txt
 ```
-(`os` and `random` are included in Python’s standard library.)
+
+Your `requirements.txt` should contain:
+```
+pandas>=2.0
+openpyxl>=3.1
+```
 
 ---
 
 ## File Structure
 
 ```
-Compatibility_Optimizer/
-├── compatibilityOptimizer.py      # Main hill climbing solver
-├── compatibilityInput.xlsx        # Input data file with compatibility matrix
-└── README.md                      # Project documentation
+compatibility-optimizer/
+├── compatibility_optimizer.py      # Main hill climbing solver
+├── compatibility_input.xlsx        # Input data file with compatibility matrix
+├── requirements.txt                # Dependency list
+└── README.md                       # Project documentation
 ```
 
 ---
@@ -64,18 +74,18 @@ Compatibility_Optimizer/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/ariadruker1/Compatibility_Optimizer.git
-   cd Compatibility_Optimizer
+   git clone https://github.com/ariadruker1/compatibility-optimizer.git
+   cd compatibility-optimizer
    ```
 
-2. **Ensure dependencies are installed**
+2. **Install dependencies**
    ```bash
-   pip install pandas
+   pip install -r requirements.txt
    ```
 
 3. **Run the optimizer**
    ```bash
-   python compatibilityOptimizer.py
+   python compatibility_optimizer.py
    ```
 
 4. **View results**  
@@ -88,7 +98,7 @@ Compatibility_Optimizer/
 
 ## Input Format
 
-The Excel file `compatibilityInput.xlsx` should contain a symmetric matrix of pairwise compatibility scores, where:
+The Excel file `compatibility_input.xlsx` should contain a symmetric matrix of pairwise compatibility scores, where:
 - Each row and column corresponds to a participant.
 - Diagonal entries (self-scores) may be zero or omitted.
 - All non-diagonal entries represent compatibility between distinct pairs.
@@ -105,7 +115,8 @@ Example:
 
 ## Theory and Approach
 
-This problem belongs to the class of **NP-hard combinatorial optimization** tasks. A brute-force search for all possible pairings scales factorially with the number of participants and is computationally infeasible for large datasets.  
+This problem belongs to the class of **NP-hard combinatorial optimization** tasks.  
+A brute-force search for all possible pairings scales factorially with the number of participants and is computationally infeasible for large datasets.  
 
 To manage complexity, this implementation uses **random hill climbing**, a local search algorithm that:
 1. Starts from a random solution.  
